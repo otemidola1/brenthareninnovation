@@ -1,0 +1,59 @@
+.reservation-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 40px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+}
+
+.booking-form .form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.booking-form .form-group-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.booking-form label {
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--secondary);
+}
+
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.booking-form input:focus,
+.booking-form select:focus,
+.booking-form textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(178, 210, 53, 0.2);
+}
+
+.submit-btn {
+    width: 100%;
+    margin-top: 10px;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .booking-form .form-group-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
