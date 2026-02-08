@@ -1,0 +1,33 @@
+# Render Blueprint: Guest House API + PostgreSQL
+# Docs: https://render.com/docs/blueprint-spec
+#
+# 1. In Render Dashboard: New > Blueprint
+# 2. Connect this repo and Render will create the DB + Web Service
+
+services:
+  - type: web
+    name: guesthouse-api
+    runtime: node
+    rootDir: server
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "18"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        sync: false  # Set in Dashboard to your frontend URL, e.g. https://your-app.onrender.com
+      - key: DATABASE_URL
+        fromDatabase:
+          name: guesthouse-db
+          property: connectionString
+
+databases:
+  - name: guesthouse-db
+    plan: free
+    databaseName: guesthouse
+    user: guesthouse
