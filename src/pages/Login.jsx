@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Auth.css';
 
@@ -9,14 +9,18 @@ const Login = () => {
     const [error, setError] = useState('');
     const { login } = useAuth();
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const redirectTo = searchParams.get('redirect');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             setError('');
             const user = await login(email, password);
-            if (user.role === 'admin') {
+            if (user.role === 'admin' && !redirectTo) {
                 navigate('/admin');
+            } else if (redirectTo && redirectTo.startsWith('/')) {
+                navigate(redirectTo);
             } else {
                 navigate('/dashboard');
             }

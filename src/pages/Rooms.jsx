@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import RoomCard from '../components/RoomCard';
+import RoomDetailModal from '../components/RoomDetailModal';
 import { api } from '../services/api';
 
 const Rooms = () => {
     const [rooms, setRooms] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedRoom, setSelectedRoom] = useState(null);
     const [filters, setFilters] = useState({ type: '', minPrice: '', maxPrice: '', guests: '' });
 
     useEffect(() => {
@@ -33,39 +35,58 @@ const Rooms = () => {
 
     return (
         <div className="rooms-page">
-            <div className="page-header">
+            <div className="rooms-page-header">
                 <div className="container">
-                    <h1>Our Accommodations</h1>
-                    <p>Find your perfect space to relax and unwind.</p>
+                    <h1>Our Rooms</h1>
+                    <p>Choose your perfect stay. Click any room for details and reserve when you're ready—login required to book.</p>
                 </div>
             </div>
 
-            <div className="container section">
-                <div className="rooms-filters">
-                    <select value={filters.type} onChange={(e) => handleFilterChange('type', e.target.value)}>
-                        <option value="">All room types</option>
-                        <option value="Standard">Standard</option>
-                        <option value="Deluxe">Deluxe</option>
-                        <option value="Suite">Suite</option>
-                        <option value="Executive">Executive</option>
-                    </select>
-                    <input type="number" placeholder="Min price" value={filters.minPrice} onChange={(e) => handleFilterChange('minPrice', e.target.value)} />
-                    <input type="number" placeholder="Max price" value={filters.maxPrice} onChange={(e) => handleFilterChange('maxPrice', e.target.value)} />
-                    <input type="number" placeholder="Guests" min="1" value={filters.guests} onChange={(e) => handleFilterChange('guests', e.target.value)} />
-                </div>
+            <div className="container rooms-main">
+                <aside className="rooms-filters">
+                    <h3>Filter</h3>
+                    <label>
+                        <span>Type</span>
+                        <select value={filters.type} onChange={(e) => handleFilterChange('type', e.target.value)}>
+                            <option value="">All types</option>
+                            <option value="Standard">Standard</option>
+                            <option value="Deluxe">Deluxe</option>
+                            <option value="Suite">Suite</option>
+                            <option value="Executive">Executive</option>
+                        </select>
+                    </label>
+                    <label>
+                        <span>Min price (₦)</span>
+                        <input type="number" placeholder="e.g. 50000" value={filters.minPrice} onChange={(e) => handleFilterChange('minPrice', e.target.value)} />
+                    </label>
+                    <label>
+                        <span>Max price (₦)</span>
+                        <input type="number" placeholder="e.g. 200000" value={filters.maxPrice} onChange={(e) => handleFilterChange('maxPrice', e.target.value)} />
+                    </label>
+                    <label>
+                        <span>Guests</span>
+                        <input type="number" placeholder="Any" min="1" value={filters.guests} onChange={(e) => handleFilterChange('guests', e.target.value)} />
+                    </label>
+                </aside>
 
-                {loading ? (
-                    <div className="rooms-loading">Loading rooms...</div>
-                ) : rooms.length === 0 ? (
-                    <div className="no-rooms">No rooms match your criteria.</div>
-                ) : (
-                    <div className="rooms-grid">
-                        {rooms.map(room => (
-                            <RoomCard key={room.id} room={room} />
-                        ))}
-                    </div>
-                )}
+                <div className="rooms-content">
+                    {loading ? (
+                        <div className="rooms-loading">Loading rooms…</div>
+                    ) : rooms.length === 0 ? (
+                        <div className="rooms-empty">No rooms match your criteria.</div>
+                    ) : (
+                        <div className="rooms-grid">
+                            {rooms.map(room => (
+                                <RoomCard key={room.id} room={room} onClick={setSelectedRoom} />
+                            ))}
+                        </div>
+                    )}
+                </div>
             </div>
+
+            {selectedRoom && (
+                <RoomDetailModal room={selectedRoom} onClose={() => setSelectedRoom(null)} />
+            )}
         </div>
     );
 };

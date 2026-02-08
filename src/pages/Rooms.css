@@ -1,31 +1,123 @@
-.page-header {
-    background-color: var(--surface);
-    padding: 60px 0;
-    text-align: center;
-    border-bottom: 1px solid var(--border);
+/* Rooms page - all rooms with prices, click for detail */
+
+.rooms-page {
+    min-height: 100vh;
+    background: var(--background);
 }
 
-.page-header h1 {
+.rooms-page-header {
+    background: linear-gradient(135deg, var(--secondary) 0%, #2d2d2d 100%);
+    color: white;
+    padding: 3.5rem 0;
+    text-align: center;
+}
+
+.rooms-page-header h1 {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.rooms-page-header p {
+    font-size: 1.05rem;
+    opacity: 0.9;
+    max-width: 560px;
+    margin: 0 auto;
+}
+
+.rooms-main {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 2.5rem;
+    padding: 2.5rem 20px 4rem;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+    .rooms-main {
+        grid-template-columns: 1fr;
+    }
+
+    .rooms-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .rooms-filters h3 {
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    .rooms-filters label {
+        min-width: 140px;
+    }
+}
+
+.rooms-filters {
+    position: sticky;
+    top: 24px;
+    height: fit-content;
+}
+
+.rooms-filters h3 {
+    font-size: 1rem;
+    font-weight: 700;
     color: var(--secondary);
-    font-size: 2.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.rooms-filters label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
     margin-bottom: 1rem;
 }
 
-.page-header p {
-    color: var(--text-light);
-    font-size: 1.1rem;
-    max-width: 600px;
-    margin: 0 auto;
+.rooms-filters label span {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.rooms-filters select,
+.rooms-filters input {
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    background: var(--surface);
+}
+
+.rooms-filters select:focus,
+.rooms-filters input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.rooms-content {
+    min-width: 0;
 }
 
 .rooms-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.75rem;
 }
 
-@media (max-width: 768px) {
-    .rooms-grid {
-        grid-template-columns: 1fr;
-    }
+.rooms-loading,
+.rooms-empty {
+    text-align: center;
+    padding: 4rem 20px;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+.rooms-empty {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    border: 1px dashed var(--border);
 }

@@ -14,7 +14,8 @@ A full-stack guest house reservation system with user authentication, room brows
 ## Tech Stack
 
 - **Frontend:** React 19, Vite 7, React Router 7, Lucide React
-- **Backend:** Node.js, Express 5, Sequelize 6, SQLite3
+- **Backend:** Node.js, Express 5, Sequelize 6
+- **Database:** SQLite (local) or **PostgreSQL** (production, e.g. Render)
 - **Auth:** JWT, bcryptjs; rate limiting on auth routes
 
 ## Quick Start
@@ -41,6 +42,14 @@ A full-stack guest house reservation system with user authentication, room brows
 - `npm run preview` – Preview production build
 - `npm run lint` – ESLint
 - **Server:** `npm start` in `server/` – Start API and sync DB
+
+## Deploy to Render (live database)
+
+To run the API and database on [Render](https://render.com) with **PostgreSQL**, see **[RENDER.md](./RENDER.md)**. Use the Blueprint (`render.yaml`) for a one-click deploy.
+
+## Connect frontend on Vercel to Render API
+
+If the frontend is deployed on **Vercel** and the API on **Render**, see **[VERCEL.md](./VERCEL.md)** for setting `VITE_API_URL` on Vercel and `FRONTEND_URL` on Render.
 
 ## Documentation
 

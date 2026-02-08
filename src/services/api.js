@@ -1,4 +1,5 @@
-const API_URL = '/api'; // Proxied to 3000 in dev
+// In dev: use Vite proxy (/api). On Vercel: set VITE_API_URL to your Render API URL + /api
+const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 const getHeaders = () => {
     const token = localStorage.getItem('token');

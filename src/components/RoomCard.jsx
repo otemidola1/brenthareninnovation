@@ -1,49 +1,29 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Wifi, Users, Maximize, Coffee } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { Users, Coffee, ChevronRight } from 'lucide-react';
 import './RoomCard.css';
 
-const RoomCard = ({ room }) => {
-    const { user } = useAuth();
+const RoomCard = ({ room, onClick }) => {
     return (
-        <div className="room-card">
+        <button
+            type="button"
+            className="room-card"
+            onClick={() => onClick?.(room)}
+        >
             <div className="room-image-container">
                 <img src={room.image || ''} alt={room.name} className="room-image" loading="lazy" />
                 <div className="room-price-badge">₦{(room.price ?? 0).toLocaleString()}<span>/night</span></div>
             </div>
             <div className="room-content">
+                <span className="room-type-tag">{room.type || 'Room'}</span>
                 <h3 className="room-title">{room.name}</h3>
-                <p className="room-description">{room.description}</p>
-
+                <p className="room-description">{room.description ? `${room.description.slice(0, 100)}${room.description.length > 100 ? '…' : ''}` : 'Comfortable accommodation for your stay.'}</p>
                 <div className="room-meta">
-                    <div className="meta-item">
-                        <Users size={18} />
-                        <span>{room.guests ?? 2} Guests</span>
-                    </div>
-                    {room.size && (
-                        <div className="meta-item">
-                            <Maximize size={18} />
-                            <span>{room.size}</span>
-                        </div>
-                    )}
-                    <div className="meta-item">
-                        <Coffee size={18} />
-                        <span>Breakfast</span>
-                    </div>
+                    <span className="meta-item"><Users size={18} /> {room.guests ?? 2} Guests</span>
+                    <span className="meta-item"><Coffee size={18} /> Breakfast</span>
                 </div>
-
-                {user ? (
-                    <Link to={`/reservation?room=${room.id}`} className="btn btn-primary btn-block">
-                        Reserve Now
-                    </Link>
-                ) : (
-                    <Link to="/login" className="btn btn-secondary btn-block" style={{ textAlign: 'center', display: 'block', backgroundColor: '#e5e7eb', color: '#374151' }}>
-                        Login to Reserve
-                    </Link>
-                )}
+                <span className="room-card-cta">View details <ChevronRight size={18} /></span>
             </div>
-        </div>
+        </button>
     );
 };
 
