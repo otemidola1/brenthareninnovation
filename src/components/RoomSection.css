@@ -1,0 +1,163 @@
+/* RoomSection – full-width block (Luxe-style) in brand colours */
+
+.room-section {
+    background: var(--surface);
+    margin-bottom: 4rem;
+    overflow: hidden;
+}
+
+.room-section:last-child {
+    margin-bottom: 2rem;
+}
+
+.room-section-image-wrap {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    overflow: hidden;
+}
+
+.room-section-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.room-section-price-badge {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: var(--primary);
+    color: var(--secondary);
+    padding: 12px 20px;
+    border-radius: var(--radius-full);
+    font-weight: 800;
+    font-size: 1.15rem;
+    box-shadow: var(--shadow-md);
+}
+
+.room-section-price-badge span {
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+.room-section-body {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2.5rem 24px 3rem;
+    text-align: center;
+}
+
+.room-section-title {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 800;
+    color: var(--secondary);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.room-section-description {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+.room-section-amenities {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem 2rem;
+    margin-bottom: 1.75rem;
+}
+
+.room-section-amenities span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+.room-section-amenities svg {
+    color: var(--primary);
+    flex-shrink: 0;
+}
+
+.room-section-availability {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    max-width: 420px;
+    margin: 0 auto 1.75rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+}
+
+.room-section-availability label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
+.room-section-availability input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    background: var(--surface);
+}
+
+.room-section-availability input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.room-section-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: var(--primary);
+    color: var(--secondary);
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.room-section-cta:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+}
+
+@media (max-width: 600px) {
+    .room-section-image-wrap {
+        height: 280px;
+    }
+
+    .room-section-price-badge {
+        top: 16px;
+        right: 16px;
+        padding: 10px 16px;
+        font-size: 1rem;
+    }
+
+    .room-section-body {
+        padding: 1.75rem 20px 2.5rem;
+    }
+
+    .room-section-availability {
+        grid-template-columns: 1fr;
+    }
+}

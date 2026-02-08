@@ -1,19 +1,24 @@
-/* Rooms page - Design pattern matching reference */
+/* Rooms page – Luxe-style layout, brand colours */
 
 .rooms-page {
     min-height: 100vh;
     background: var(--background);
 }
 
-/* Hero Section */
+/* Compact hero */
 .rooms-hero {
     position: relative;
-    height: 60vh;
-    min-height: 400px;
+    height: 45vh;
+    min-height: 280px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+}
+
+.rooms-hero--compact {
+    height: 38vh;
+    min-height: 240px;
 }
 
 .rooms-hero-bg {
@@ -27,7 +32,7 @@
 .rooms-hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(26, 26, 26, 0.7) 0%, rgba(26, 26, 26, 0.4) 100%);
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.65) 0%, rgba(26, 26, 26, 0.35) 100%);
 }
 
 .rooms-hero-content {
@@ -35,184 +40,105 @@
     z-index: 2;
     text-align: center;
     color: white;
-    max-width: 800px;
+    max-width: 720px;
     padding: 0 20px;
 }
 
 .rooms-hero-content h1 {
-    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-size: clamp(1.85rem, 4vw, 2.75rem);
     font-weight: 800;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     line-height: 1.2;
     text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
 }
 
 .rooms-hero-content p {
-    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-size: clamp(0.95rem, 1.8vw, 1.15rem);
     opacity: 0.95;
-    line-height: 1.6;
     text-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Filter Section - Beige box */
-.rooms-filter-section {
-    background: #f5f5f0;
-    padding: 2rem 0;
+/* Filter bar – centred dropdowns (Luxe-style) */
+.rooms-filter-bar {
+    background: var(--surface);
     border-bottom: 1px solid var(--border);
+    padding: 1.25rem 0;
 }
 
-.rooms-filter-box {
-    background: #faf9f5;
-    border-radius: var(--radius-md);
-    padding: 1.75rem 2rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+.rooms-filter-bar-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem 1.5rem;
 }
 
-.filter-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 1.25rem;
-    margin-bottom: 1.25rem;
-}
-
-.filter-row:last-child {
-    margin-bottom: 0;
-}
-
-.filter-row label {
+.filter-dropdown {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
-.filter-row label span {
-    font-size: 0.85rem;
+.filter-dropdown span {
+    font-size: 0.75rem;
     font-weight: 600;
-    color: var(--text-main);
     text-transform: uppercase;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
 }
 
-.filter-row select,
-.filter-row input[type="number"] {
-    padding: 10px 14px;
-    border: 1px solid #e0e0d8;
-    border-radius: var(--radius-sm);
+.filter-dropdown select {
+    padding: 10px 36px 10px 14px;
+    min-width: 160px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
     font-size: 0.95rem;
-    background: white;
+    background: var(--background);
     color: var(--text-main);
-    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
 }
 
-.filter-row select:focus,
-.filter-row input:focus {
+.filter-dropdown select:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(199, 224, 8, 0.1);
 }
 
-.price-range-label {
-    grid-column: span 2;
-}
-
-.price-range-display {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    margin-bottom: 4px;
-}
-
-.price-range-inputs {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.price-range-inputs input {
-    flex: 1;
-}
-
-.price-range-inputs span {
-    color: var(--text-muted);
-    font-weight: 500;
-}
-
-/* Rooms Grid */
-.rooms-main {
-    padding: 3rem 20px 4rem;
-    max-width: 1280px;
-    margin: 0 auto;
-}
-
-.rooms-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 2rem;
+/* List of room sections */
+.rooms-list-wrap {
+    padding: 2rem 0 4rem;
 }
 
 .rooms-loading,
 .rooms-empty {
     text-align: center;
-    padding: 4rem 20px;
+    padding: 4rem 24px;
     color: var(--text-muted);
     font-size: 1.1rem;
 }
 
 .rooms-empty {
+    max-width: 480px;
+    margin: 0 auto;
     background: var(--surface);
     border-radius: var(--radius-lg);
     border: 1px dashed var(--border);
 }
 
-/* Responsive */
-@media (max-width: 900px) {
-    .rooms-hero {
-        height: 50vh;
-        min-height: 320px;
-    }
-
-    .rooms-filter-box {
-        padding: 1.5rem 1.25rem;
-    }
-
-    .filter-row {
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 1rem;
-    }
-
-    .price-range-label {
-        grid-column: span 1;
-    }
-
-    .price-range-inputs {
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .price-range-inputs span {
-        display: none;
-    }
-
-    .rooms-grid {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 1.5rem;
-    }
-}
-
 @media (max-width: 600px) {
-    .rooms-hero-content h1 {
-        font-size: 1.75rem;
+    .rooms-hero,
+    .rooms-hero--compact {
+        height: 32vh;
+        min-height: 200px;
     }
 
-    .rooms-hero-content p {
-        font-size: 0.95rem;
+    .rooms-filter-bar-inner {
+        flex-direction: column;
     }
 
-    .filter-row {
-        grid-template-columns: 1fr;
-    }
-
-    .rooms-grid {
-        grid-template-columns: 1fr;
+    .filter-dropdown select {
+        min-width: 100%;
     }
 }
