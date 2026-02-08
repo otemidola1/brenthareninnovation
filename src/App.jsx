@@ -46,13 +46,9 @@ function App() {
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/faq" element={<FAQ />} />
+              <Route path="/rooms" element={<Rooms />} />
 
               {/* Protected Routes - Require Authentication */}
-              <Route path="/rooms" element={
-                <ProtectedRoute>
-                  <Rooms />
-                </ProtectedRoute>
-              } />
               <Route path="/reservation" element={
                 <ProtectedRoute>
                   <Reservation />
