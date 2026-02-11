@@ -4,10 +4,15 @@ import { supabase } from '../supabaseClient';
 export const api = {
     // Auth (Legacy/Placeholder)
     login: async (email, password) => {
-        // Use Supabase Auth directly for now, or Auth.js signIn in UI
         const { data, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw new Error(error.message);
-        return data.user;
+        // Flatten user object for frontend compatibility
+        const user = data.user;
+        if (user) {
+            user.role = user.user_metadata?.role || 'guest';
+            user.name = user.user_metadata?.name;
+        }
+        return user;
     },
 
     register: async (userData) => {
