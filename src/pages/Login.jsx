@@ -25,7 +25,7 @@ const Login = () => {
                 navigate('/dashboard');
             }
         } catch (err) {
-            setError('Invalid email or password');
+            setError(err.message || 'Invalid email or password');
         }
     };
 

@@ -12,12 +12,19 @@ const cardRoutes = require('./routes/cards');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// CORS: allow frontend (Vercel/Render) and local dev
-const frontendUrl = process.env.FRONTEND_URL;
-const corsOptions = frontendUrl
-    ? { origin: [frontendUrl, 'http://localhost:5173'], credentials: true }
-    : {};
-app.use(cors(corsOptions));
+// CORS: allow Vercel (production + preview), Render, and local dev
+function corsOrigin(origin, cb) {
+    const allowed = [
+        'http://localhost:5173',
+        'http://localhost:3000',
+        process.env.FRONTEND_URL
+    ].filter(Boolean);
+    if (!origin) return cb(null, true); // same-origin or tools like Postman
+    if (allowed.some(url => origin === url)) return cb(null, true);
+    if (origin.endsWith('.vercel.app')) return cb(null, true);
+    return cb(null, false);
+}
+app.use(cors({ origin: corsOrigin, credentials: true }));
 app.use(express.json());
 
 // Health and root (no DB) so Render can detect live service

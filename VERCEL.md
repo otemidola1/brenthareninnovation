@@ -1,20 +1,21 @@
 # Connect the frontend on Vercel to your Render API
 
-Your **frontend** is on Vercel and your **API (webservice)** runs on Render. To connect them:
+Your **frontend** is on Vercel and your **API (webservice)** runs on Render. To connect them so **login and sign up work** on the live site:
 
 ---
 
-## 1. Set the API URL on Vercel
+## 1. Set the API URL on Vercel (required for login/sign up)
 
 1. Open **[Vercel Dashboard](https://vercel.com/dashboard)** and select your project (guesthouse frontend).
 2. Go to **Settings** → **Environment Variables**.
 3. Add a new variable:
    - **Name:** `VITE_API_URL`
-   - **Value:** Your Render Web Service URL + `/api`  
+   - **Value:** Your Render Web Service URL **including** `/api` at the end.  
      Example: `https://guesthouse-api.onrender.com/api`  
-     (Use your actual Render URL, e.g. `https://brenthareninnovation-4.onrender.com/api` if that’s your service.)
-   - **Environment:** Production (and Preview if you want).
-4. Save, then trigger a **new deployment** (Deployments → ⋮ → Redeploy) so the new variable is applied.
+     (Use your actual Render URL, e.g. `https://brenthareninnovation-4.onrender.com/api` — no trailing slash after `api`.)
+   - **Environment:** Production (and **Preview** if you use preview deployments).
+4. **Save**, then **redeploy**: go to **Deployments** → ⋮ on the latest → **Redeploy**.  
+   Vite bakes `VITE_API_URL` into the build, so a new deployment is required after adding or changing it.
 
 ---
 

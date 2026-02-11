@@ -9,28 +9,50 @@ const getHeaders = () => {
     };
 };
 
+function handleAuthResponse(res, body) {
+    if (!res.ok) {
+        const msg = (body && body.error) ? body.error : 'Request failed';
+        throw new Error(msg);
+    }
+    return body;
+}
+
+async function authFetch(url, options) {
+    try {
+        const res = await fetch(url, options);
+        let body;
+        try {
+            body = await res.json();
+        } catch {
+            body = {};
+        }
+        return handleAuthResponse(res, body);
+    } catch (err) {
+        if (err.message && (err.message === 'Failed to fetch' || err.message.includes('NetworkError') || err.message.includes('Load failed'))) {
+            throw new Error('Cannot reach server. On the live site, set VITE_API_URL in Vercel to your Render API URL (e.g. https://your-api.onrender.com/api) and redeploy.');
+        }
+        throw err;
+    }
+}
+
 export const api = {
     // Auth
     login: async (email, password) => {
-        const res = await fetch(`${API_URL}/auth/login`, {
+        const data = await authFetch(`${API_URL}/auth/login`, {
             method: 'POST',
             headers: getHeaders(),
             body: JSON.stringify({ email, password })
         });
-        if (!res.ok) throw new Error((await res.json()).error);
-        const data = await res.json();
         localStorage.setItem('token', data.token);
         return data.user;
     },
 
     register: async (userData) => {
-        const res = await fetch(`${API_URL}/auth/register`, {
+        const data = await authFetch(`${API_URL}/auth/register`, {
             method: 'POST',
             headers: getHeaders(),
             body: JSON.stringify(userData)
         });
-        if (!res.ok) throw new Error((await res.json()).error);
-        const data = await res.json();
         localStorage.setItem('token', data.token);
         return data.user;
     },
