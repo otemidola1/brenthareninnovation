@@ -109,7 +109,16 @@ export const api = {
 
     // Bookings
     createBooking: async (bookingData) => {
-        const { data, error } = await supabase.from('bookings').insert([bookingData]).select().single();
+        const { data, error } = await supabase.from('bookings').insert([{
+            user_id: bookingData.userId,
+            room_type: bookingData.roomType,
+            check_in: bookingData.checkIn,
+            check_out: bookingData.checkOut,
+            guests: bookingData.guests,
+            status: bookingData.status,
+            notes: bookingData.notes,
+            payment_method: bookingData.paymentMethod
+        }]).select().single();
         if (error) throw new Error(error.message);
         return data;
     },
@@ -119,7 +128,21 @@ export const api = {
         if (userId) req = req.eq('user_id', userId);
         const { data, error } = await req;
         if (error) throw new Error(error.message);
-        return data;
+
+        // Map back to camelCase for frontend
+        return data.map(b => ({
+            ...b,
+            id: b.id,
+            userId: b.user_id,
+            roomType: b.room_type,
+            checkIn: b.check_in,
+            checkOut: b.check_out,
+            guests: b.guests,
+            status: b.status,
+            notes: b.notes,
+            paymentMethod: b.payment_method,
+            rooms: b.rooms
+        }));
     },
 
     updateBooking: async (id, updates) => {
@@ -129,13 +152,19 @@ export const api = {
     },
 
     checkInBooking: async (id) => {
-        const { data, error } = await supabase.from('bookings').update({ status: 'checked_in', realCheckInTime: new Date() }).eq('id', id).select().single();
+        const { data, error } = await supabase.from('bookings').update({
+            status: 'checked_in',
+            real_check_in_time: new Date()
+        }).eq('id', id).select().single();
         if (error) throw new Error(error.message);
         return data;
     },
 
     checkOutBooking: async (id) => {
-        const { data, error } = await supabase.from('bookings').update({ status: 'checked_out', realCheckOutTime: new Date() }).eq('id', id).select().single();
+        const { data, error } = await supabase.from('bookings').update({
+            status: 'checked_out',
+            real_check_out_time: new Date()
+        }).eq('id', id).select().single();
         if (error) throw new Error(error.message);
         return data;
     },
