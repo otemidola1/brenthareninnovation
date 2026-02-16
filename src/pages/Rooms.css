@@ -58,87 +58,121 @@
     text-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Filter bar – centred dropdowns (Luxe-style) */
+/* Filter bar – Floating Card Design */
 .rooms-filter-bar {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 1.25rem 0;
+    margin-top: -3rem;
+    /* Overlap the hero slightly */
+    padding-bottom: 2rem;
+    position: relative;
+    z-index: 10;
 }
 
 .rooms-filter-bar-inner {
+    background: var(--surface);
+    padding: 1.5rem 2rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 1rem 1.5rem;
+    gap: 1.5rem 2.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    max-width: 1000px;
+    /* Limit width for better aesthetic */
+    margin: 0 auto;
 }
 
 .filter-dropdown {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
+    flex: 1;
+    min-width: 200px;
 }
 
 .filter-dropdown span {
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     color: var(--text-muted);
+    margin-left: 4px;
 }
 
 .filter-dropdown select {
-    padding: 10px 36px 10px 14px;
-    min-width: 160px;
+    width: 100%;
+    padding: 14px 18px;
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    font-size: 0.95rem;
-    background: var(--background);
+    font-size: 1rem;
+    background-color: var(--background);
     color: var(--text-main);
+    font-weight: 500;
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%231a1a1a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right 12px center;
+    background-position: right 14px center;
+    box-shadow: var(--shadow-sm);
+}
+
+.filter-dropdown select:hover {
+    border-color: var(--secondary);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
 }
 
 .filter-dropdown select:focus {
     outline: none;
     border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(199, 224, 8, 0.15);
 }
 
 /* List of room sections */
 .rooms-list-wrap {
-    padding: 2rem 0 4rem;
+    padding: 1rem 0 4rem;
 }
 
 .rooms-loading,
 .rooms-empty {
     text-align: center;
-    padding: 4rem 24px;
+    padding: 6rem 24px;
     color: var(--text-muted);
-    font-size: 1.1rem;
+    font-size: 1.15rem;
+    font-weight: 500;
 }
 
 .rooms-empty {
-    max-width: 480px;
-    margin: 0 auto;
-    background: var(--surface);
+    max-width: 500px;
+    margin: 2rem auto;
+    background: white;
+    padding: 3rem;
     border-radius: var(--radius-lg);
-    border: 1px dashed var(--border);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
 }
 
-@media (max-width: 600px) {
-    .rooms-hero,
-    .rooms-hero--compact {
-        height: 32vh;
-        min-height: 200px;
+@media (max-width: 768px) {
+    .rooms-filter-bar {
+        margin-top: 0;
+        background: var(--surface);
+        padding: 1.5rem 0;
+        border-bottom: 1px solid var(--border);
     }
 
     .rooms-filter-bar-inner {
+        box-shadow: none;
+        border: none;
+        padding: 0 20px;
+        background: transparent;
         flex-direction: column;
+        align-items: stretch;
+        gap: 1.25rem;
     }
 
-    .filter-dropdown select {
+    .filter-dropdown {
         min-width: 100%;
     }
 }

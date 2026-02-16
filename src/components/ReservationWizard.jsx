@@ -32,6 +32,22 @@ const ReservationWizard = () => {
         const fetchData = async () => {
             const roomData = await api.getRooms();
             setRooms(roomData);
+
+            // Auto-select room from URL
+            const params = new URLSearchParams(window.location.search);
+            const roomParam = params.get('room');
+            if (roomParam && roomData.length > 0) {
+                // Try to find by ID first, then name
+                const preselectedRoom = roomData.find(r => r.id === roomParam) || roomData.find(r => r.name === roomParam);
+                if (preselectedRoom) {
+                    setFormData(prev => ({
+                        ...prev,
+                        roomType: preselectedRoom.name,
+                        roomDetails: preselectedRoom
+                    }));
+                }
+            }
+
             if (user) {
                 try {
                     const cardData = await api.getCards();
@@ -112,7 +128,9 @@ const ReservationWizard = () => {
                 guests: formData.guests,
                 status: 'confirmed',
                 notes: formData.notes,
-                paymentMethod: selectedCard === 'pay_at_hotel' ? 'Pay at Hotel' : 'Credit Card'
+                paymentMethod: selectedCard === 'pay_at_hotel' ? 'Pay at Hotel' : 'Credit Card',
+                roomId: formData.roomDetails?.id,
+                totalPrice: calculateTotal()
             };
 
             await api.createBooking(bookingData);

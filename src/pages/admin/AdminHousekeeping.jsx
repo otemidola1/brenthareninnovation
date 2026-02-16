@@ -73,70 +73,76 @@ const AdminHousekeeping = () => {
             </div>
 
             <div className="housekeeping-grid">
-                {rooms.map(room => (
-                    <div key={room.id} className={`room-status-card ${room.housekeepingStatus}`}>
-                        <div className="card-header">
-                            <div className="room-info">
-                                <BedDouble size={20} className="icon-room" />
-                                <div>
-                                    <h3>{room.name}</h3>
-                                    <span className="room-type">{room.type}</span>
+                {rooms.map(room => {
+                    const status = room.housekeepingStatus || (room.housekeeping_status ? room.housekeeping_status : 'clean');
+                    const lastCleanedDate = room.last_cleaned || room.lastCleaned;
+                    const assignedTo = room.assigned_to || room.assignedTo || 'Unassigned';
+
+                    return (
+                        <div key={room.id} className={`room-status-card ${status}`}>
+                            <div className="card-header">
+                                <div className="room-info">
+                                    <BedDouble size={20} className="icon-room" />
+                                    <div>
+                                        <h3>{room.name}</h3>
+                                        <span className="room-type">{room.type}</span>
+                                    </div>
                                 </div>
+                                <span className="status-label" style={{ backgroundColor: getStatusColor(status) }}>
+                                    {getStatusIcon(status)}
+                                    {status.replace('_', ' ')}
+                                </span>
                             </div>
-                            <span className="status-label" style={{ backgroundColor: getStatusColor(room.housekeepingStatus) }}>
-                                {getStatusIcon(room.housekeepingStatus)}
-                                {room.housekeepingStatus.replace('_', ' ')}
-                            </span>
-                        </div>
 
-                        <div className="card-body">
-                            <div className="info-row">
-                                <Clock size={14} />
-                                <span>Last Sync: {room.lastCleaned ? new Date(room.lastCleaned).toLocaleTimeString() : 'Never'}</span>
-                            </div>
-                            <div className="info-row">
-                                <UserIcon size={14} />
-                                <span>Assigned: {room.assignedTo || 'Unassigned'}</span>
-                            </div>
-                            {room.priority === 'high' && (
-                                <div className="priority-tag">
-                                    <AlertCircle size={14} /> Urgent Attention
+                            <div className="card-body">
+                                <div className="info-row">
+                                    <Clock size={14} />
+                                    <span>Last Sync: {lastCleanedDate ? new Date(lastCleanedDate).toLocaleTimeString() : 'Never'}</span>
                                 </div>
-                            )}
-                        </div>
+                                <div className="info-row">
+                                    <UserIcon size={14} />
+                                    <span>Assigned: {assignedTo}</span>
+                                </div>
+                                {room.priority === 'high' && (
+                                    <div className="priority-tag">
+                                        <AlertCircle size={14} /> Urgent Attention
+                                    </div>
+                                )}
+                            </div>
 
-                        <div className="card-actions">
-                            <button
-                                onClick={() => updateRoom(room.id, { housekeepingStatus: 'clean', lastCleaned: new Date() })}
-                                className={`act-btn clean ${room.housekeepingStatus === 'clean' ? 'active' : ''}`}
-                            >Clean</button>
-                            <button
-                                onClick={() => updateRoom(room.id, { housekeepingStatus: 'in_progress' })}
-                                className={`act-btn progress ${room.housekeepingStatus === 'in_progress' ? 'active' : ''}`}
-                            >In Progress</button>
-                            <button
-                                onClick={() => updateRoom(room.id, { housekeepingStatus: 'dirty' })}
-                                className={`act-btn dirty ${room.housekeepingStatus === 'dirty' ? 'active' : ''}`}
-                            >Dirty</button>
-                        </div>
+                            <div className="card-actions">
+                                <button
+                                    onClick={() => updateRoom(room.id, { housekeepingStatus: 'clean', last_cleaned: new Date() })}
+                                    className={`act-btn clean ${status === 'clean' ? 'active' : ''}`}
+                                >Clean</button>
+                                <button
+                                    onClick={() => updateRoom(room.id, { housekeepingStatus: 'in_progress' })}
+                                    className={`act-btn progress ${status === 'in_progress' ? 'active' : ''}`}
+                                >In Progress</button>
+                                <button
+                                    onClick={() => updateRoom(room.id, { housekeepingStatus: 'dirty' })}
+                                    className={`act-btn dirty ${status === 'dirty' ? 'active' : ''}`}
+                                >Dirty</button>
+                            </div>
 
-                        <div className="card-footer">
-                            <input
-                                type="text"
-                                placeholder="Assign Staff..."
-                                defaultValue={room.assignedTo || ''}
-                                onBlur={(e) => updateRoom(room.id, { assignedTo: e.target.value })}
-                            />
-                            <select
-                                value={room.priority}
-                                onChange={(e) => updateRoom(room.id, { priority: e.target.value })}
-                            >
-                                <option value="normal">Normal</option>
-                                <option value="high">High Priority</option>
-                            </select>
+                            <div className="card-footer">
+                                <input
+                                    type="text"
+                                    placeholder="Assign Staff..."
+                                    defaultValue={assignedTo === 'Unassigned' ? '' : assignedTo}
+                                    onBlur={(e) => updateRoom(room.id, { assigned_to: e.target.value })}
+                                />
+                                <select
+                                    value={room.priority || 'normal'}
+                                    onChange={(e) => updateRoom(room.id, { priority: e.target.value })}
+                                >
+                                    <option value="normal">Normal</option>
+                                    <option value="high">High Priority</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
 
             <style>{`

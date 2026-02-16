@@ -78,50 +78,52 @@ const Rooms = () => {
             </section>
 
             <div className="rooms-filter-bar">
-                <div className="container rooms-filter-bar-inner">
-                    <label className="filter-dropdown">
-                        <span>Price Range</span>
-                        <select
-                            value={[filters.minPrice, filters.maxPrice].join('-') || 'any'}
-                            onChange={(e) => {
-                                const v = e.target.value;
-                                if (v === 'any') {
-                                    handleFilterChange('minPrice', '');
-                                    handleFilterChange('maxPrice', '');
-                                } else {
-                                    const [min, max] = v.split('-');
-                                    handleFilterChange('minPrice', min || '');
-                                    handleFilterChange('maxPrice', max || '');
-                                }
-                            }}
-                        >
-                            <option value="any">Any</option>
-                            <option value="0-100000">Under ₦100,000</option>
-                            <option value="100000-150000">₦100k – ₦150k</option>
-                            <option value="150000-200000">₦150k – ₦200k</option>
-                            <option value="200000-">₦200,000+</option>
-                        </select>
-                    </label>
-                    <label className="filter-dropdown">
-                        <span>Capacity</span>
-                        <select value={filters.guests} onChange={(e) => handleFilterChange('guests', e.target.value)}>
-                            <option value="">Any</option>
-                            <option value="1">1 Guest</option>
-                            <option value="2">2 Guests</option>
-                            <option value="3">3 Guests</option>
-                            <option value="4">4+ Guests</option>
-                        </select>
-                    </label>
-                    <label className="filter-dropdown">
-                        <span>Room Type</span>
-                        <select value={filters.type} onChange={(e) => handleFilterChange('type', e.target.value)}>
-                            <option value="">All Types</option>
-                            <option value="Standard">Standard</option>
-                            <option value="Deluxe">Deluxe</option>
-                            <option value="Suite">Suite</option>
-                            <option value="Executive">Executive</option>
-                        </select>
-                    </label>
+                <div className="container">
+                    <div className="rooms-filter-bar-inner">
+                        <label className="filter-dropdown">
+                            <span>Price Range</span>
+                            <select
+                                value={[filters.minPrice, filters.maxPrice].join('-') || 'any'}
+                                onChange={(e) => {
+                                    const v = e.target.value;
+                                    if (v === 'any') {
+                                        handleFilterChange('minPrice', '');
+                                        handleFilterChange('maxPrice', '');
+                                    } else {
+                                        const [min, max] = v.split('-');
+                                        handleFilterChange('minPrice', min || '');
+                                        handleFilterChange('maxPrice', max || '');
+                                    }
+                                }}
+                            >
+                                <option value="any">Any</option>
+                                <option value="0-100000">Under ₦100,000</option>
+                                <option value="100000-150000">₦100k – ₦150k</option>
+                                <option value="150000-200000">₦150k – ₦200k</option>
+                                <option value="200000-">₦200,000+</option>
+                            </select>
+                        </label>
+                        <label className="filter-dropdown">
+                            <span>Capacity</span>
+                            <select value={filters.guests} onChange={(e) => handleFilterChange('guests', e.target.value)}>
+                                <option value="">Any</option>
+                                <option value="1">1 Guest</option>
+                                <option value="2">2 Guests</option>
+                                <option value="3">3 Guests</option>
+                                <option value="4">4+ Guests</option>
+                            </select>
+                        </label>
+                        <label className="filter-dropdown">
+                            <span>Room Type</span>
+                            <select value={filters.type} onChange={(e) => handleFilterChange('type', e.target.value)}>
+                                <option value="">All Types</option>
+                                <option value="Standard">Standard</option>
+                                <option value="Deluxe">Deluxe</option>
+                                <option value="Suite">Suite</option>
+                                <option value="Executive">Executive</option>
+                            </select>
+                        </label>
+                    </div>
                 </div>
             </div>
 

@@ -1,15 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { api } from '../../services/api';
+import { supabase } from '../../supabaseClient';
 
 const AdminBookings = () => {
     const [bookings, setBookings] = useState([]);
 
-    useEffect(() => {
-        const fetchBookings = async () => {
+    const fetchBookings = async () => {
+        try {
             const data = await api.getBookings();
             setBookings(data);
-        };
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
         fetchBookings();
+
+        // Realtime Subscription
+        const channel = supabase
+            .channel('admin-bookings')
+            .on(
+                'postgres_changes',
+                { event: '*', schema: 'public', table: 'bookings' },
+                () => {
+                    fetchBookings();
+                }
+            )
+            .subscribe();
+
+        return () => {
+            supabase.removeChannel(channel);
+        };
     }, []);
 
     const updateStatus = async (id, status) => {
@@ -63,7 +85,9 @@ const AdminBookings = () => {
                             <tr key={booking.id}>
                                 <td>#{booking.id}</td>
                                 <td>{booking.userId}</td>
-                                <td>{booking.roomType}</td>
+                                <td>
+                                    {booking.rooms?.name || booking.roomType}
+                                </td>
                                 <td>
                                     <div>{booking.checkIn} - {booking.checkOut}</div>
                                     {booking.realCheckInTime && <div style={{ fontSize: '0.8em', color: 'green' }}>In: {new Date(booking.realCheckInTime).toLocaleString()}</div>}

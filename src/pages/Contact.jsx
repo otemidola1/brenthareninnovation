@@ -1,13 +1,31 @@
 import React, { useState } from 'react';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { api } from '../services/api';
 import './Contact.css';
 
 const Contact = () => {
     const [submitted, setSubmitted] = useState(false);
 
-    const handleSubmit = (e) => {
+    const [loading, setLoading] = useState(false);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setSubmitted(true);
+        setLoading(true);
+        try {
+            // Collect form data
+            const formData = new FormData(e.target);
+            await api.sendMessage({
+                name: formData.get('name'),
+                email: formData.get('email'),
+                subject: formData.get('subject'),
+                message: formData.get('message')
+            });
+            setSubmitted(true);
+        } catch (error) {
+            alert('Failed to send message: ' + error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -75,21 +93,23 @@ const Contact = () => {
                         <form onSubmit={handleSubmit} className="contact-form">
                             <div className="form-group">
                                 <label>Your Name</label>
-                                <input type="text" required />
+                                <input type="text" name="name" required />
                             </div>
                             <div className="form-group">
                                 <label>Email Address</label>
-                                <input type="email" required />
+                                <input type="email" name="email" required />
                             </div>
                             <div className="form-group">
                                 <label>Subject</label>
-                                <input type="text" required />
+                                <input type="text" name="subject" required />
                             </div>
                             <div className="form-group">
                                 <label>Message</label>
-                                <textarea rows="5" required></textarea>
+                                <textarea name="message" rows="5" required></textarea>
                             </div>
-                            <button type="submit" className="btn btn-primary">Send Message</button>
+                            <button type="submit" className="btn btn-primary" disabled={loading}>
+                                {loading ? 'Sending...' : 'Send Message'}
+                            </button>
                         </form>
                     )}
                 </div>

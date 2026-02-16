@@ -47,9 +47,15 @@ const MyBookings = () => {
 
     const handleCancel = async (id) => {
         if (window.confirm('Are you sure you want to cancel this reservation?')) {
-            await api.updateBooking(id, { status: 'cancelled' });
-            const data = await api.getBookings(user.id);
-            setBookings(data);
+            try {
+                // Optimistic UI update or wait for reload
+                await api.updateBooking(id, { status: 'cancelled' });
+                // Re-fetch to ensure sync
+                const data = await api.getBookings(user.id);
+                setBookings(data);
+            } catch (error) {
+                alert('Failed to cancel booking: ' + error.message);
+            }
         }
     };
 
