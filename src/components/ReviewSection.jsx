@@ -8,7 +8,7 @@ const ReviewSection = ({ limit }) => {
     const MOCK_REVIEWS = [
         {
             id: 'mock-1',
-            User: { name: 'Sarah Jenkins' },
+            User: { name: 'Amaka Igwe' },
             rating: 5,
             comment: 'An absolute gem! The room was cleaner than I expected and the service was impeccable. Truly a home away from home.',
             createdAt: new Date(Date.now() - 86400000 * 2).toISOString()
@@ -22,7 +22,7 @@ const ReviewSection = ({ limit }) => {
         },
         {
             id: 'mock-3',
-            User: { name: 'Emily Ross' },
+            User: { name: 'Folake Adeyemi' },
             rating: 4,
             comment: 'The best stay I\'ve had in years. The breakfast was delicious and the staff were incredibly helpful.',
             createdAt: new Date(Date.now() - 86400000 * 10).toISOString()
