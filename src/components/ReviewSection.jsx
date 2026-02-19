@@ -5,18 +5,44 @@ import { Star } from 'lucide-react';
 const ReviewSection = ({ limit }) => {
     const [reviews, setReviews] = useState([]);
 
+    const MOCK_REVIEWS = [
+        {
+            id: 'mock-1',
+            User: { name: 'Sarah Jenkins' },
+            rating: 5,
+            comment: 'An absolute gem! The room was cleaner than I expected and the service was impeccable. Truly a home away from home.',
+            createdAt: new Date(Date.now() - 86400000 * 2).toISOString()
+        },
+        {
+            id: 'mock-2',
+            User: { name: 'David Okafor' },
+            rating: 5,
+            comment: 'Modern, clean, and very comfortable. The wifi speed was perfect for my remote work. Highly recommended!',
+            createdAt: new Date(Date.now() - 86400000 * 5).toISOString()
+        },
+        {
+            id: 'mock-3',
+            User: { name: 'Emily Ross' },
+            rating: 4,
+            comment: 'The best stay I\'ve had in years. The breakfast was delicious and the staff were incredibly helpful.',
+            createdAt: new Date(Date.now() - 86400000 * 10).toISOString()
+        }
+    ];
+
     useEffect(() => {
         const fetchReviews = async () => {
             try {
                 // Fetch only approved reviews
                 const data = await api.getReviews(false, true);
+                const reviewsToShow = data.length > 0 ? data : MOCK_REVIEWS;
+
                 if (limit) {
-                    setReviews(data.slice(0, limit));
+                    setReviews(reviewsToShow.slice(0, limit));
                 } else {
-                    setReviews(data);
+                    setReviews(reviewsToShow);
                 }
             } catch (_) {
-                setReviews([]);
+                setReviews(MOCK_REVIEWS.slice(0, limit || MOCK_REVIEWS.length));
             }
         };
         fetchReviews();

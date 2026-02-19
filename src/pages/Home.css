@@ -106,6 +106,7 @@
         opacity: 0;
         transform: translateY(24px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -237,52 +238,7 @@
     line-height: 1.5;
 }
 
-/* ----- Image strip ----- */
-.home-image-strip {
-    position: relative;
-    min-height: 380px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
 
-.image-strip-bg {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-}
-
-.image-strip-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, rgba(26, 26, 26, 0.85) 0%, rgba(26, 26, 26, 0.6) 100%);
-}
-
-.image-strip-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    color: white;
-}
-
-.image-strip-content h2 {
-    font-size: clamp(1.75rem, 3vw, 2.5rem);
-    font-weight: 800;
-    margin-bottom: 0.5rem;
-}
-
-.image-strip-content p {
-    font-size: 1.1rem;
-    opacity: 0.9;
-    margin-bottom: 1.5rem;
-}
-
-.btn-lg {
-    padding: 14px 28px;
-    font-size: 1rem;
-}
 
 /* ----- CTA ----- */
 .cta-section {

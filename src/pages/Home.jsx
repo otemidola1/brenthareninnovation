@@ -93,20 +93,12 @@ const Home = () => {
             </section>
 
             {/* Full-bleed image */}
-            <section className="home-image-strip">
-                <div className="image-strip-bg" style={{ backgroundImage: `url(${roomImage})` }} />
-                <div className="image-strip-overlay" />
-                <div className="container image-strip-content">
-                    <h2>Browse our rooms—no login required</h2>
-                    <p>Explore accommodations and book when you're ready.</p>
-                    <Link to="/rooms" className="btn btn-primary btn-lg">View All Rooms</Link>
-                </div>
-            </section>
-
-            {/* Reviews */}
+            {/* Reviews Section (Replaces "Browse our rooms") */}
             <div className="bg-checkered">
                 <ReviewSection limit={3} />
             </div>
+
+
 
             {/* CTA */}
             <section className="cta-section">
